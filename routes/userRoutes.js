@@ -3,6 +3,7 @@ const userModel = require("../models/userSchema")
 const bcrypt = require("bcrypt");
 const  jwt  = require("jsonwebtoken");
 const userRoutes = Router()
+require("dotenv").config();
 
 userRoutes.post("/register",async (req,res)=>{
 	try{
@@ -23,7 +24,8 @@ userRoutes.post("/login",async (req,res)=>{
 		if(user.length>0){
 			bcrypt.compare(password, user[0].password, (err, result)=>{
 				if(result){
-					const token = jwt.sign({email:user.email},"aditya",(err, token)=>{
+					const secret_key = process.env.SECRET_KEY;
+					const token = jwt.sign({email:user.email},secret_key,(err, token)=>{
 						if(err) console.log(err);
 						else{
 							res.status(200).json({accessToken:token});

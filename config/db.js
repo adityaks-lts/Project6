@@ -1,5 +1,7 @@
 const  mongoose = require("mongoose");
+require("dotenv").config();
 
-const connectDB = mongoose.connect("mongodb://127.0.0.1:27017/")
+const db_url = process.env.DB_URL;
+const connectDB = mongoose.connect(db_url)
 
 module.exports = connectDB;
